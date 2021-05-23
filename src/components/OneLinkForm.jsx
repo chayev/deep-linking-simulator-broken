@@ -8,7 +8,9 @@ import { Typography } from "@appsflyer/fe-ui-core"
 import { ToggleButtonGroup, ToggleButton } from "@appsflyer/fe-ui-core"
 import { ToggleBanana, TogglePeach, ToggleApple } from "./svg-components"
 
-import { Select } from "@appsflyer/fe-ui-core"
+import Select from "react-select"
+
+// import { Select } from "@appsflyer/fe-ui-core"
 import Button from "@material-ui/core/Button"
 import { makeStyles } from "@material-ui/core/styles"
 
@@ -126,6 +128,7 @@ export default function OneLinkForm({
       </ToggleButtonGroup>
 
       <Select
+        isSearchable={false}
         options={[
           { value: "1", label: "1" },
           { value: "5", label: "5" },
