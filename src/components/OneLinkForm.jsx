@@ -76,6 +76,8 @@ export default function OneLinkForm({
     }
   }
 
+  //testing
+
   const classes = useStyles()
 
   // const webURL = `https://www.appsflyer.com/webDemo/`
@@ -153,6 +155,7 @@ export default function OneLinkForm({
       </Typography>
 
       <Select
+        isSearchable={false}
         options={[
           { value: "appStore", label: "App Store" },
           {
@@ -168,6 +171,7 @@ export default function OneLinkForm({
       />
 
       <Select
+        isSearchable={false}
         options={[
           { value: "playStore", label: "Play Store" },
           {
@@ -183,6 +187,7 @@ export default function OneLinkForm({
       />
 
       <Select
+        isSearchable={false}
         options={[
           {
             value: webURL,
