@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/deep-linking-simulator-broken/static/js/main.a35bf318.chunk.js",
+    "main.js.map": "/deep-linking-simulator-broken/static/js/main.a35bf318.chunk.js.map",
+    "runtime-main.js": "/deep-linking-simulator-broken/static/js/runtime-main.b1eac6ad.js",
+    "runtime-main.js.map": "/deep-linking-simulator-broken/static/js/runtime-main.b1eac6ad.js.map",
+    "static/js/2.bee0ce89.chunk.js": "/deep-linking-simulator-broken/static/js/2.bee0ce89.chunk.js",
+    "static/js/2.bee0ce89.chunk.js.map": "/deep-linking-simulator-broken/static/js/2.bee0ce89.chunk.js.map",
+    "static/js/3.9ec87e0a.chunk.js": "/deep-linking-simulator-broken/static/js/3.9ec87e0a.chunk.js",
+    "static/js/3.9ec87e0a.chunk.js.map": "/deep-linking-simulator-broken/static/js/3.9ec87e0a.chunk.js.map",
+    "index.html": "/deep-linking-simulator-broken/index.html",
+    "static/js/2.bee0ce89.chunk.js.LICENSE.txt": "/deep-linking-simulator-broken/static/js/2.bee0ce89.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b1eac6ad.js",
+    "static/js/2.bee0ce89.chunk.js",
+    "static/js/main.a35bf318.chunk.js"
+  ]
+}
