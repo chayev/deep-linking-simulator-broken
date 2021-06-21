@@ -1,7 +1,7 @@
 {
-  "name": "deep-linking-simulator",
+  "name": "deep-linking-simulator-broken",
   "version": "0.1.0",
-  "homepage": "https://chayev.github.io/deep-linking-simulator",
+  "homepage": "https://chayev.github.io/deep-linking-simulator-broken",
   "private": true,
   "dependencies": {
     "@appsflyer/fe-components-core": "^5.0.11",

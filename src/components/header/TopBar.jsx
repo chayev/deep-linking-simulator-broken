@@ -1,6 +1,9 @@
 import React from "react"
 import styled from "styled-components"
 
+import FormControlLabel from "@material-ui/core/FormControlLabel"
+import Switch from "@material-ui/core/Switch"
+
 import { HeaderAfLogo, HeaderOlLogo } from "../svg-components"
 
 const TopBarWrapper = styled.div`
@@ -25,6 +28,10 @@ const Divider = styled.div`
   transform: rotate(90deg);
 `
 
+const Toggle = styled.div`
+  margin-left: auto;
+`
+
 const OlLogo = styled(HeaderOlLogo)`
   margin-bottom: 7px;
 `
@@ -35,6 +42,9 @@ export default function TopBar() {
       <HeaderAfLogo />
       <Divider />
       <OlLogo />
+      <Toggle>
+        <FormControlLabel control={<Switch />} label="Deep Link" />
+      </Toggle>
     </TopBarWrapper>
   )
 }
