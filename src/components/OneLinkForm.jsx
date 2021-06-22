@@ -46,10 +46,16 @@ export default function OneLinkForm({
   setWebRedirect,
   setOneLinkURL,
   qrCodeRef,
+  deepLinkState,
 }) {
   const generateURL = async () => {
-    const url = "https://onelink-sim.onelink.me/coiD"
-    const pid = "QR_code"
+    let url = "https://onelink-sim.onelink.me/coiD"
+    let pid = "QR_code"
+
+    if (!deepLinkState) {
+      url = "https://onelink-sim.onelink.me/P3Ik"
+      pid = "QR_code_broken"
+    }
 
     const params = {
       deep_link_value: selectedPage || undefined,
