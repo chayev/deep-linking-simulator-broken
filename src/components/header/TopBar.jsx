@@ -3,6 +3,9 @@ import styled from "styled-components"
 
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Switch from "@material-ui/core/Switch"
+import { IconDropDownMenu } from "@appsflyer/fe-ui-core"
+import MenuItem from "@material-ui/core/MenuItem"
+import SettingsIcon from "@material-ui/icons/Settings"
 
 import { HeaderAfLogo, HeaderOlLogo } from "../svg-components"
 
@@ -29,29 +32,76 @@ const Divider = styled.div`
 `
 
 const Toggle = styled(FormControlLabel)`
-  margin-left: auto;
+  padding-left: 15px;
+`
+
+const DropMenu = styled(IconDropDownMenu)`
   color: white;
+`
+
+const DropMenuContainer = styled.div`
+  margin-left: auto;
+  margin-right: 20px;
 `
 
 const OlLogo = styled(HeaderOlLogo)`
   margin-bottom: 7px;
 `
 
-export default function TopBar({ deepLinkState, setDeepLinkState }) {
+export default function TopBar({
+  universalLinks,
+  setUniversalLinks,
+  appLinks,
+  setAppLinks,
+  uriScheme,
+  setUriScheme,
+}) {
   return (
     <TopBarWrapper>
       <HeaderAfLogo />
       <Divider />
       <OlLogo />
-      <Toggle
-        control={
-          <Switch
-            checked={deepLinkState}
-            onChange={(_, deepLinkState) => setDeepLinkState(deepLinkState)}
-          />
-        }
-        label="Deep Link"
-      />
+      <DropMenuContainer>
+        <DropMenu id="one" ariaLabel="3 dots icon" icon={<SettingsIcon />}>
+          <MenuItem>
+            <Toggle
+              control={
+                <Switch
+                  checked={universalLinks}
+                  onChange={(_, universalLinks) =>
+                    setUniversalLinks(universalLinks)
+                  }
+                />
+              }
+              label="Universal Links"
+            />
+          </MenuItem>
+
+          <MenuItem>
+            <Toggle
+              control={
+                <Switch
+                  checked={appLinks}
+                  onChange={(_, appLinks) => setAppLinks(appLinks)}
+                />
+              }
+              label="App Links"
+            />
+          </MenuItem>
+
+          <MenuItem>
+            <Toggle
+              control={
+                <Switch
+                  checked={uriScheme}
+                  onChange={(_, uriScheme) => setUriScheme(uriScheme)}
+                />
+              }
+              label="URI Scheme"
+            />
+          </MenuItem>
+        </DropMenu>
+      </DropMenuContainer>
     </TopBarWrapper>
   )
 }

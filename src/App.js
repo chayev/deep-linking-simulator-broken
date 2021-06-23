@@ -44,15 +44,21 @@ function App() {
   })
   const [oneLinkURL, setOneLinkURL] = useState("")
   const qrCodeRef = useRef(null)
-  const [deepLinkState, setDeepLinkState] = useState(true)
+  const [universalLinks, setUniversalLinks] = useState(true)
+  const [appLinks, setAppLinks] = useState(true)
+  const [uriScheme, setUriScheme] = useState(true)
 
   return (
     <ThemeProvider>
       <CssBaseline />
 
       <TopBar
-        deepLinkState={deepLinkState}
-        setDeepLinkState={setDeepLinkState}
+        universalLinks={universalLinks}
+        setUniversalLinks={setUniversalLinks}
+        appLinks={appLinks}
+        setAppLinks={setAppLinks}
+        uriScheme={uriScheme}
+        setUriScheme={setUriScheme}
       />
       <Banner />
 
@@ -70,7 +76,9 @@ function App() {
           setWebRedirect={setWebRedirect}
           setOneLinkURL={setOneLinkURL}
           qrCodeRef={qrCodeRef}
-          deepLinkState={deepLinkState}
+          universalLinks={universalLinks}
+          appLinks={appLinks}
+          uriScheme={uriScheme}
         />
         <QROutput oneLinkURL={oneLinkURL} qrCodeRef={qrCodeRef} />
       </BodyWrapper>

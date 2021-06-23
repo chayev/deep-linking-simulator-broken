@@ -46,13 +46,15 @@ export default function OneLinkForm({
   setWebRedirect,
   setOneLinkURL,
   qrCodeRef,
-  deepLinkState,
+  universalLinks,
+  appLinks,
+  uriScheme,
 }) {
   const generateURL = async () => {
     let url = "https://onelink-sim.onelink.me/coiD"
     let pid = "QR_code"
 
-    if (!deepLinkState) {
+    if (!universalLinks) {
       url = "https://onelink-sim.onelink.me/P3Ik"
       pid = "QR_code_broken"
     }
