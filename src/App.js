@@ -60,7 +60,14 @@ function App() {
         uriScheme={uriScheme}
         setUriScheme={setUriScheme}
       />
-      <Banner />
+      <Banner
+        universalLinks={universalLinks}
+        setUniversalLinks={setUniversalLinks}
+        appLinks={appLinks}
+        setAppLinks={setAppLinks}
+        uriScheme={uriScheme}
+        setUriScheme={setUriScheme}
+      />
 
       <BodyWrapper>
         <OneLinkForm

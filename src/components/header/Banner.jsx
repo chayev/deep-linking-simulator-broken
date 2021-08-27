@@ -4,6 +4,9 @@ import styled from "styled-components"
 import { BannerDesktop, BannerMobile } from "../svg-components"
 import { Typography } from "@appsflyer/fe-ui-core"
 
+import FormControlLabel from "@material-ui/core/FormControlLabel"
+import Switch from "@material-ui/core/Switch"
+
 const BannerWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -50,7 +53,27 @@ const BannerDesktopStyled = styled(BannerDesktop)`
   }
 `
 
-export default function Banner() {
+const Toggle = styled(FormControlLabel)`
+  padding-left: 15px;
+`
+
+const MenuItem = styled.div`
+  color: white;
+`
+
+const DropMenuContainer = styled.div`
+  margin-left: auto;
+  margin-right: 20px;
+`
+
+export default function Banner({
+  universalLinks,
+  setUniversalLinks,
+  appLinks,
+  setAppLinks,
+  uriScheme,
+  setUriScheme,
+}) {
   return (
     <BannerWrapper>
       <TitleContainer>
@@ -59,6 +82,45 @@ export default function Banner() {
       </TitleContainer>
       <BannerMobileStyled />
       <BannerDesktopStyled />
+      {/* <DropMenuContainer>
+        <MenuItem>
+          <Toggle
+            control={
+              <Switch
+                checked={universalLinks}
+                onChange={(_, universalLinks) =>
+                  setUniversalLinks(universalLinks)
+                }
+              />
+            }
+            label="Universal Links"
+          />
+        </MenuItem>
+
+        <MenuItem>
+          <Toggle
+            control={
+              <Switch
+                checked={appLinks}
+                onChange={(_, appLinks) => setAppLinks(appLinks)}
+              />
+            }
+            label="App Links"
+          />
+        </MenuItem>
+
+        <MenuItem>
+          <Toggle
+            control={
+              <Switch
+                checked={uriScheme}
+                onChange={(_, uriScheme) => setUriScheme(uriScheme)}
+              />
+            }
+            label="URI Scheme"
+          />
+        </MenuItem>
+      </DropMenuContainer> */}
     </BannerWrapper>
   )
 }

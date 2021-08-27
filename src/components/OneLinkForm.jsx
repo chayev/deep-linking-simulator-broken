@@ -12,6 +12,9 @@ import { Select } from "@appsflyer/fe-ui-core"
 import Button from "@material-ui/core/Button"
 import { makeStyles } from "@material-ui/core/styles"
 
+import Tooltip from "@material-ui/core/Tooltip"
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline"
+
 const Wrapper = styled.div`
   background: #ffffff;
 
@@ -53,10 +56,37 @@ export default function OneLinkForm({
   const generateURL = async () => {
     let url = "https://onelink-sim.onelink.me/coiD"
     let pid = "QR_code"
+    let c = ""
 
-    if (!universalLinks) {
+    // url = "https://onelink-sim.onelink.me/P3Ik"
+    // pid = "QR_code_broken"
+
+    if (universalLinks && appLinks && uriScheme) {
       url = "https://onelink-sim.onelink.me/P3Ik"
-      pid = "QR_code_broken"
+      c = "AAAA"
+    } else if (universalLinks && appLinks && !uriScheme) {
+      url = "https://onelink-sim.onelink.me/P3Ik"
+      c = "BBBB"
+    } else if (universalLinks && !appLinks && uriScheme) {
+      url = "https://onelink-sim.onelink.me/P3Ik"
+      c = "CCCC"
+    } else if (!universalLinks && appLinks && uriScheme) {
+      url = "https://onelink-sim.onelink.me/P3Ik"
+      c = "DDDD"
+    } else if (!universalLinks && !appLinks && uriScheme) {
+      url = "https://onelink-sim.onelink.me/P3Ik"
+      c = "EEEE"
+    } else if (!universalLinks && appLinks && !uriScheme) {
+      url = "https://onelink-sim.onelink.me/P3Ik"
+      c = "FFFF"
+    } else if (universalLinks && !appLinks && !uriScheme) {
+      url = "https://onelink-sim.onelink.me/P3Ik"
+      c = "GGGG"
+    } else if (!universalLinks && !appLinks && !uriScheme) {
+      url = "https://onelink-sim.onelink.me/P3Ik"
+      c = "HHHH"
+    } else {
+      alert("Error - something seems off!")
     }
 
     const params = {
@@ -72,7 +102,7 @@ export default function OneLinkForm({
     }
 
     const query = querystring.stringify(params)
-    const finalURL = `${url}?pid=${pid}&${query}`
+    const finalURL = `${url}?pid=${pid}&c=${c}&${query}`
 
     await setOneLinkURL(finalURL)
     const isMobile = window.innerWidth < 768
@@ -106,6 +136,14 @@ export default function OneLinkForm({
           className={classes.paddingLeft}
         >
           Open a specific page in the app
+          <Tooltip
+            placement="right"
+            interactive
+            classes={{ tooltip: "AFTooltip-light" }}
+            title="The specific page displays in the link as the deep_link_value parameter."
+          >
+            <HelpOutlineIcon fontSize="small" color="action" />
+          </Tooltip>
         </Typography>
       </FormLabel>
 
