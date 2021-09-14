@@ -1,16 +1,17 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import querystring from "query-string"
-
+import { ToggleButtonGroup, ToggleButton, Typography, Select } from "@appsflyer/fe-ui-core"
 import FormLabel from "@material-ui/core/FormLabel"
-import { Typography } from "@appsflyer/fe-ui-core"
-
-import { ToggleButtonGroup, ToggleButton } from "@appsflyer/fe-ui-core"
-import { ToggleBanana, TogglePeach, ToggleApple } from "./svg-components"
-
-import { Select } from "@appsflyer/fe-ui-core"
 import Button from "@material-ui/core/Button"
 import { makeStyles } from "@material-ui/core/styles"
+import Tooltip from '@material-ui/core/Tooltip';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+
+import axios from 'axios';
+
+import { ToggleBanana, TogglePeach, ToggleApple } from "./svg-components"
+import { gaTag } from "../utilities/analytics"
 
 const Wrapper = styled.div`
   background: #ffffff;
@@ -19,6 +20,14 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   border-radius: 4px;
   padding: 24px;
+`
+
+const StyledTooltip = styled(Tooltip)`
+  display: none;
+
+  @media only screen and (min-width: 768px) {
+    display: inline-block;
+  }
 `
 
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +39,12 @@ const useStyles = makeStyles((theme) => ({
   },
   paddingLeft: {
     paddingLeft: "4px",
+  },
+  helpIcon: {
+    color: theme.palette.grey[500],
+    '&:hover': {
+      color: theme.palette.grey[600]
+    }
   },
 }))
 
@@ -45,9 +60,18 @@ export default function OneLinkForm({
   webRedirect,
   setWebRedirect,
   setOneLinkURL,
+  setShortLinkURL,
+  setBrandedLinkURL,
   qrCodeRef,
   deepLinkState,
 }) {
+  const [shortLinkID, setShortLinkID] = useState("")
+
+  const generateLinks = async () => {
+    generateURL()
+    generateShortURL()
+  }
+
   const generateURL = async () => {
     let url = "https://onelink-sim.onelink.me/coiD"
     let pid = "QR_code"
@@ -78,6 +102,50 @@ export default function OneLinkForm({
     if (isMobile) {
       qrCodeRef.current?.scrollIntoView({ behavior: "smooth" })
     }
+
+    gaTag.event({
+      category: 'User',
+      action: 'Link Generated',
+      label: selectedPage,
+      value: parseInt(fruitAmount.value)
+    });
+  }
+
+  const generateShortURL = async () => {    
+    const options = {
+      data: JSON.stringify({
+        // 'brand_domain': "killtest.cache.afsdktests.com",
+        'ttl': '1d',
+        'data': {
+          pid: 'my_media_source_SMS', 
+          c: 'my_campaign_Michael',
+          deep_link_value: selectedPage || undefined,
+          deep_link_sub1: fruitAmount?.value || undefined,
+          af_ios_url: iOSRedirect.label === "Web Page" ? iOSRedirect.value : undefined,
+          af_android_url: androidRedirect.label === "Web Page" ? androidRedirect.value : undefined,
+          af_web_dp: webRedirect.value || undefined,
+        }
+      }),
+      shortLinkID: shortLinkID,
+      oneLinkID: "coiD",
+    }
+
+    const endpoint = "http://onelinkapi.chayev.com/links" //UPDATE THIS!
+
+    axios.post(endpoint, JSON.stringify(options)).then(res => {
+      let data = res.data
+      let oneLinkID = options.oneLinkID
+      if(data.includes(oneLinkID)) {
+        setShortLinkURL(data)
+        let shortLinkIDVal = data.slice(-(data.length - (data.indexOf(oneLinkID) + oneLinkID.length + 1)))
+        setShortLinkID(shortLinkIDVal)
+
+        var url = new URL(data)
+        url.hostname = "killtest.cache.afsdktests.com"
+        setBrandedLinkURL(url.href)
+      }
+    })
+
   }
 
   const classes = useStyles()
@@ -85,6 +153,22 @@ export default function OneLinkForm({
   // const webURL = `https://www.appsflyer.com/webDemo/`
   const webURL = `https://chayev.github.io/appsflyer-smartbanner-fruits/`
   // const webURL = `https://chayev.github.io/appsflyer-smartbanner-fruits/products/${selectedPage}`
+
+  const TooltipContentDeepLinkValue = () => (
+    <div>
+      <Typography variant="body2">
+        The specific page displays in the link as the 'deep_link_value' parameter.
+      </Typography>
+    </div>
+  )
+  
+  const TooltipContentDeepLinkSub1 = () => (
+    <div>
+      <Typography variant="body2">
+        The amount of fruit displays in the link as the 'deep_link_sub1' parameter. 
+      </Typography>
+    </div>
+  )
 
   return (
     <Wrapper>
@@ -103,7 +187,18 @@ export default function OneLinkForm({
           color="textPrimary"
           className={classes.paddingLeft}
         >
-          Open a specific page in the app
+          Open a specific page in the app 
+          <StyledTooltip
+            placement="right"
+            interactive
+            classes={{ tooltip: 'AFTooltip-light' }}
+            title={<TooltipContentDeepLinkValue />}>
+            <InfoOutlinedIcon
+              className={classes.helpIcon}
+              fontSize="small"
+              color="action"
+            />
+          </StyledTooltip>
         </Typography>
       </FormLabel>
 
@@ -139,7 +234,22 @@ export default function OneLinkForm({
           { value: "25", label: "25" },
           { value: "99", label: "99" },
         ]}
-        label="Display the amount of fruit"
+        label={
+          <>
+            Display the amount of fruit
+            <StyledTooltip
+              placement="right"
+              interactive
+              classes={{ tooltip: 'AFTooltip-light' }}
+              title={<TooltipContentDeepLinkSub1 />}>
+              <InfoOutlinedIcon
+                className={classes.helpIcon}
+                fontSize="small"
+                color="action"
+              />
+            </StyledTooltip>
+          </>
+        }
         value={fruitAmount}
         onChange={setFruitAmount}
         size="fullWidth"
@@ -206,7 +316,7 @@ export default function OneLinkForm({
         size="medium"
         color="primary"
         fullWidth
-        onClick={generateURL}
+        onClick={generateLinks}
       >
         Create Link
       </Button>

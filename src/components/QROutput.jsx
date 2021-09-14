@@ -1,13 +1,13 @@
 import React from "react"
 import styled from "styled-components"
 import QRCode from "qrcode.react"
-
-import { EmptyState, Typography } from "@appsflyer/fe-ui-core"
+import { EmptyState, Typography, Alert } from "@appsflyer/fe-ui-core"
 import Link from "@material-ui/core/Link"
-import { OutputEmptyState } from "./svg-components"
 import { makeStyles } from "@material-ui/core/styles"
 
 import CopyToClipboardWithLink from "./CopyToClipboardWithLink/CopyToClipboardWithLink"
+import { OutputEmptyState } from "./svg-components"
+import { gaTag } from "../utilities/analytics"
 
 const Wrapper = styled.div`
   background: #ffffff;
@@ -68,10 +68,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function QROutput({ oneLinkURL, qrCodeRef }) {
+export default function QROutput({ 
+  oneLinkURL,
+  shortLinkURL,
+  brandedLinkURL,
+  qrCodeRef,
+}) {
   const classes = useStyles()
 
-  const myLink = () => {
+  const myLongLink = () => {
     return (
       <Link
         underline="always"
@@ -83,6 +88,56 @@ export default function QROutput({ oneLinkURL, qrCodeRef }) {
       </Link>
     )
   }
+
+  const myShortLink = () => {
+    return (
+      <Link
+        underline="always"
+        href={shortLinkURL}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <Typography className={classes.linkPadding}>{shortLinkURL}</Typography>
+      </Link>
+    )
+  }
+  
+  const myBrandedLink = () => {
+    return (
+      <Link
+        underline="always"
+        href={brandedLinkURL}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <Typography className={classes.linkPadding}>{brandedLinkURL}</Typography>
+      </Link>
+    )
+  }
+
+  const onCopyLongURL = () => {
+    gaTag.event({
+      category: 'User',
+      action: 'Copied Long Link',
+      label: oneLinkURL
+    });
+  };
+
+  const onCopyShortURL = () => {
+    gaTag.event({
+      category: 'User',
+      action: 'Copied Short Link',
+      label: shortLinkURL
+    });
+  };
+
+  const onCopyBrandedURL = () => {
+    gaTag.event({
+      category: 'User',
+      action: 'Copied Branded Link',
+      label: brandedLinkURL
+    });
+  };
 
   return (
     <Wrapper isEmptyState={!oneLinkURL}>
@@ -136,13 +191,42 @@ export default function QROutput({ oneLinkURL, qrCodeRef }) {
           <CopyToClipboardWithLink
             id="1"
             size="fullWidth"
-            link={myLink}
+            link={myLongLink}
             value={oneLinkURL}
+            onCopy={onCopyLongURL}
           />
 
           <QRCodeWrapper ref={qrCodeRef}>
             <QRCode value={oneLinkURL} size={290} includeMargin={true} />
           </QRCodeWrapper>
+
+          <CopyToClipboardWithLink
+            id="2"
+            size="fullWidth"
+            link={myShortLink}
+            value={shortLinkURL}
+            onCopy={onCopyShortURL}
+          />
+
+          <QRCodeWrapper>
+            <QRCode value={shortLinkURL} size={290} includeMargin={true} />
+          </QRCodeWrapper>
+
+          <CopyToClipboardWithLink
+            id="3"
+            size="fullWidth"
+            link={myBrandedLink}
+            value={shortLinkURL}
+            onCopy={onCopyBrandedURL}
+          />
+
+          <QRCodeWrapper>
+            <QRCode value={brandedLinkURL} size={290} includeMargin={true} />
+          </QRCodeWrapper>
+
+          <Alert severity="info">
+            We’ve created 3 links that will lead to the same page. Each link looks different, but it’s the same.
+          </Alert>
         </>
       )}
     </Wrapper>
