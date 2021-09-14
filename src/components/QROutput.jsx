@@ -1,13 +1,13 @@
 import React from "react"
 import styled from "styled-components"
 import QRCode from "qrcode.react"
-
 import { EmptyState, Typography } from "@appsflyer/fe-ui-core"
 import Link from "@material-ui/core/Link"
-import { OutputEmptyState } from "./svg-components"
 import { makeStyles } from "@material-ui/core/styles"
 
 import CopyToClipboardWithLink from "./CopyToClipboardWithLink/CopyToClipboardWithLink"
+import { OutputEmptyState } from "./svg-components"
+import { gaTag } from "../utilities/analytics"
 
 const Wrapper = styled.div`
   background: #ffffff;
@@ -68,7 +68,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function QROutput({ oneLinkURL, qrCodeRef }) {
+export default function QROutput({ 
+  oneLinkURL,
+  qrCodeRef,
+}) {
   const classes = useStyles()
 
   const myLink = () => {
@@ -83,6 +86,14 @@ export default function QROutput({ oneLinkURL, qrCodeRef }) {
       </Link>
     )
   }
+
+  const onCopy = () => {
+    gaTag.event({
+      category: 'User',
+      action: 'Copied Link',
+      label: oneLinkURL
+    });
+  };
 
   return (
     <Wrapper isEmptyState={!oneLinkURL}>
@@ -138,6 +149,7 @@ export default function QROutput({ oneLinkURL, qrCodeRef }) {
             size="fullWidth"
             link={myLink}
             value={oneLinkURL}
+            onCopy={onCopy}
           />
 
           <QRCodeWrapper ref={qrCodeRef}>

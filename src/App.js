@@ -1,14 +1,16 @@
 import React, { useState, useRef } from "react"
 import { ThemeProvider } from "@appsflyer/fe-ui-theme"
 import CssBaseline from "@material-ui/core/CssBaseline"
+import styled from "styled-components"
+import * as FullStory from "@fullstory/browser"
 
 import TopBar from "./components/header/TopBar"
 import Banner from "./components/header/Banner"
 import OneLinkForm from "./components/OneLinkForm"
 import QROutput from "./components/QROutput"
+import { gaTag } from "./utilities/analytics"
 
-import styled from "styled-components"
-import * as FullStory from "@fullstory/browser"
+gaTag.pageview(window.location.pathname + window.location.search)
 
 FullStory.init({ orgId: "ZKPBZ" })
 
@@ -28,7 +30,7 @@ const BodyWrapper = styled.div`
 
 function App() {
   const [selectedPage, setSelectedPage] = useState("peaches")
-  const [fruitAmount, setFruitAmount] = useState(null)
+  const [fruitAmount, setFruitAmount] = useState(0)
   const [iOSRedirect, setIOSRedirect] = useState({
     value: "appStore",
     label: "App Store",
@@ -72,7 +74,10 @@ function App() {
           qrCodeRef={qrCodeRef}
           deepLinkState={deepLinkState}
         />
-        <QROutput oneLinkURL={oneLinkURL} qrCodeRef={qrCodeRef} />
+        <QROutput 
+          oneLinkURL={oneLinkURL} 
+          qrCodeRef={qrCodeRef} 
+        />
       </BodyWrapper>
     </ThemeProvider>
   )
