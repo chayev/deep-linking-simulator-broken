@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 
 import FormControlLabel from "@material-ui/core/FormControlLabel"
-// import Switch from "@material-ui/core/Switch"
+import Switch from "@material-ui/core/Switch"
 
 import { HeaderAfLogo, HeaderOlLogo } from "../svg-components"
 
@@ -28,10 +28,10 @@ const Divider = styled.div`
   transform: rotate(90deg);
 `
 
-// const Toggle = styled(FormControlLabel)`
-//   margin-left: auto;
-//   color: white;
-// `
+const Toggle = styled(FormControlLabel)`
+  margin-left: auto;
+  color: white;
+`
 
 const OlLogo = styled(HeaderOlLogo)`
   margin-bottom: 7px;
@@ -43,7 +43,7 @@ export default function TopBar({ deepLinkState, setDeepLinkState }) {
       <HeaderAfLogo />
       <Divider />
       <OlLogo />
-      {/* <Toggle
+      <Toggle
         control={
           <Switch
             checked={deepLinkState}
@@ -51,7 +51,7 @@ export default function TopBar({ deepLinkState, setDeepLinkState }) {
           />
         }
         label="Deep Link"
-      /> */}
+      />
     </TopBarWrapper>
   )
 }

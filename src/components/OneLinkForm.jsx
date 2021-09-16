@@ -130,7 +130,7 @@ export default function OneLinkForm({
       oneLinkID: "coiD",
     }
 
-    const endpoint = "http://onelinkapi.chayev.com/links" //UPDATE THIS!
+    const endpoint = "https://onelinkapi.chayev.com/links" //UPDATE THIS!
 
     axios.post(endpoint, JSON.stringify(options)).then(res => {
       let data = res.data
