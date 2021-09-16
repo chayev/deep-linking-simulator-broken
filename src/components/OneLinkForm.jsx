@@ -141,7 +141,7 @@ export default function OneLinkForm({
         setShortLinkID(shortLinkIDVal)
 
         var url = new URL(data)
-        url.hostname = "killtest.cache.afsdktests.com"
+        url.hostname = "onelink-sim.stg4.onelinkstg.com"
         setBrandedLinkURL(url.href)
       }
     })
