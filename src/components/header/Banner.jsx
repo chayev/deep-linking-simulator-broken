@@ -54,8 +54,8 @@ export default function Banner() {
   return (
     <BannerWrapper>
       <TitleContainer>
-        <HeaderTitle variant="h4">Deep Linking Simulator</HeaderTitle>
-        <Typography variant="subtitle1">Powered by OneLink</Typography>
+        <HeaderTitle variant="h4">Demo Data Generator</HeaderTitle>
+        <Typography variant="subtitle1">Powered by Team MR JJ</Typography>
       </TitleContainer>
       <BannerMobileStyled />
       <BannerDesktopStyled />

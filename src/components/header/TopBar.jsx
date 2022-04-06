@@ -28,30 +28,21 @@ const Divider = styled.div`
   transform: rotate(90deg);
 `
 
-const Toggle = styled(FormControlLabel)`
-  margin-left: auto;
-  color: white;
-`
+// const Toggle = styled(FormControlLabel)`
+//   margin-left: auto;
+//   color: white;
+// `
 
-const OlLogo = styled(HeaderOlLogo)`
-  margin-bottom: 7px;
-`
+// const OlLogo = styled(HeaderOlLogo)`
+//   margin-bottom: 7px;
+// `
 
 export default function TopBar({ deepLinkState, setDeepLinkState }) {
   return (
     <TopBarWrapper>
       <HeaderAfLogo />
-      <Divider />
-      <OlLogo />
-      <Toggle
-        control={
-          <Switch
-            checked={deepLinkState}
-            onChange={(_, deepLinkState) => setDeepLinkState(deepLinkState)}
-          />
-        }
-        label="Deep Link"
-      />
+      {/* <Divider /> */}
+      {/* <OlLogo /> */}
     </TopBarWrapper>
   )
 }
