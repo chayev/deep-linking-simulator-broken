@@ -53,7 +53,7 @@ function App() {
       const num = getRandomNum(sessionRange[0], sessionRange[1])
       for (let i = 1; i <= num; i++) {
         const sessionUrl = url.replace("counter=1", "counter=3")
-        await fetch(sessionUrl)
+        // await fetch(sessionUrl)
         console.log("sessionUrl", sessionUrl)
       }
     }
@@ -65,7 +65,7 @@ function App() {
           let eventUrl = url.replace("counter=1", "counter=3")
           eventUrl = eventUrl.replace("launch", "inapps")
           eventUrl = `${eventUrl}&event_name=${e.value}`
-          await fetch(eventUrl)
+          // await fetch(eventUrl)
           console.log("eventUrl", eventUrl)
         }
       })
@@ -78,7 +78,7 @@ function App() {
       const url = `${URL}/launch?appid=${appId}&devkey=${devKey}&uid=${uid}&idfa=123456789-987654321&counter=1`
 
       try {
-        await fetch(url)
+        // await fetch(url)
         console.log("installUrl", url)
         setSessionsAndEvents(url)
       } catch (e) {
